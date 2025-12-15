@@ -30,6 +30,8 @@ public class ProjectInfo
 
 	public List<string> PackageReferences { get; set; } = new List<string>();
 
+	public List<string> NuGetPackages { get; set; } = new List<string>();
+
 	public List<string> GlobalStatic { get; set; } = new List<string>();
 	public List<string> GlobalUsing { get; set; } = new List<string>();
 	public List<string> IncludeFiles { get; set; } = new();

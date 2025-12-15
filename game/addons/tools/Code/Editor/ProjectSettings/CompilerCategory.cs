@@ -47,6 +47,12 @@ internal sealed class CompilerCategory : ProjectInspector.Category
 		set => configuration.Unsafe = value;
 	}
 
+	public List<string> NugetPackages
+	{
+		get => configuration.NuGetPackages;
+		set => configuration.NuGetPackages = value;
+	}
+
 	public CompilerReleaseMode ReleaseMode
 	{
 		get => (CompilerReleaseMode)configuration.ReleaseMode;
@@ -113,6 +119,16 @@ internal sealed class CompilerCategory : ProjectInspector.Category
 		{
 			var sheet = new ControlSheet();
 			sheet.AddRow( so.GetProperty( nameof( ReleaseMode ) ) );
+
+			BodyLayout.Add( sheet );
+		}
+
+		if ( project.Config.IsStandaloneOnly )
+		{
+			BodyLayout.AddSpacingCell( 8 );
+
+			var sheet = new ControlSheet();
+			sheet.AddRow( so.GetProperty( nameof( NugetPackages ) ) );
 
 			BodyLayout.Add( sheet );
 		}

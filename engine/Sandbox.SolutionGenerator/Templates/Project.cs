@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Buffers;
+using System.Text;
 
 namespace Sandbox.SolutionGenerator;
 
@@ -86,6 +88,20 @@ internal partial class Project
 			foreach ( var entry in References )
 			{
 				sb.AppendLine( $"		<Reference Include=\"{ManagedRoot}\\{entry}\"/> " );
+			}
+
+			foreach ( var entry in NuGetPackageRefernces )
+			{
+				// 0: PackageName, 1: PackageVersion.
+				var parts = entry.Split( '@', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries );
+
+				if ( parts.Length != 2 )
+					continue;
+
+				if ( !Version.TryParse( parts[1], out var version ) )
+					continue;
+
+				sb.AppendLine( $"		<PackageReference Include=\"{parts[0]}\" Version=\"{version}\"/> " );
 			}
 
 			sb.AppendLine( $"	</ItemGroup>" );

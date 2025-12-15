@@ -72,6 +72,14 @@ public sealed partial class Project
 			}
 
 			//
+			// Add NuGet packages to the project
+			//
+			foreach ( var nugetReference in compilerSettings.NuGetPackages )
+			{
+				project.NuGetPackages.Add( nugetReference );
+			}
+
+			//
 			// Server projects
 			//
 			if ( Config.Type == "game" || Config.Type == "library" )

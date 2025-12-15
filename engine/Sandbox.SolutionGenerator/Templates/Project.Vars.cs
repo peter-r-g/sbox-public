@@ -13,6 +13,8 @@ internal partial class Project
 	public List<string> IgnoreFolders;
 	public List<string> IgnoreFiles = new();
 
+	// NuGet package references, not to be confused with S&box package references
+	public List<string> NuGetPackageRefernces = new();
 	public string ProjectReferences;
 
 	public bool Unsafe;

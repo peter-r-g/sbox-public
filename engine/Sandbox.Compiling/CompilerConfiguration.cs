@@ -51,6 +51,11 @@ partial class Compiler
 		public List<string> AssemblyReferences { get; set; }
 
 		/// <summary>
+		/// List of all NuGet packages to include in the project. Each entry in the format "PackageName@PackageVersion"
+		/// </summary>
+		public List<string> NuGetPackages { get; set; }
+
+		/// <summary>
 		/// Maps file patterns to preprocessor directives they should be wrapped in
 		/// </summary>
 		public Dictionary<string, string> ReplacementDirectives { get; set; }
@@ -83,6 +88,7 @@ partial class Compiler
 				RootNamespace = "Sandbox";
 
 			AssemblyReferences ??= new();
+			NuGetPackages ??= new();
 			IgnoreFolders ??= new();
 			ReplacementDirectives ??= new()
 			{

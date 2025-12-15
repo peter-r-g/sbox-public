@@ -83,6 +83,7 @@ namespace Sandbox.SolutionGenerator
 					ManagedRoot = AttemptAbsoluteToRelative( managedFolder, p.CsprojPath ),
 					GameRoot = AttemptAbsoluteToRelative( relativePath, p.CsprojPath ),
 					References = p.References,
+					NuGetPackageRefernces = p.NuGetPackages,
 					GlobalStatic = p.GlobalStatic,
 					GlobalUsing = p.GlobalUsing,
 					RootNamespace = p.Settings.RootNamespace ?? "Sandbox",
