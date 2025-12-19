@@ -9,13 +9,12 @@ partial class Compiler
 	/// <summary>
 	/// Process Razor files from the code archive and generate C# syntax trees
 	/// </summary>
-	private List<SyntaxTree> ProcessRazorFiles( CodeArchive archive, CompilerOutput output )
+	private IEnumerable<SyntaxTree> ProcessRazorFiles( CodeArchive archive, CompilerOutput output )
 	{
 		var razorFiles = archive.AdditionalFiles
-			.Where( x => x.LocalPath.EndsWith( ".razor", System.StringComparison.OrdinalIgnoreCase ) )
-			.ToList();
+			.Where( x => x.LocalPath.EndsWith( ".razor", System.StringComparison.OrdinalIgnoreCase ) );
 
-		if ( razorFiles.Count == 0 )
+		if ( !razorFiles.Any() )
 			return [];
 
 		var trees = new ConcurrentBag<SyntaxTree>();
@@ -78,6 +77,6 @@ partial class Compiler
 			output.Diagnostics.AddRange( diagnostics );
 		}
 
-		return trees.OrderBy( x => x.FilePath ).ToList();
+		return trees.OrderBy( x => x.FilePath );
 	}
 }

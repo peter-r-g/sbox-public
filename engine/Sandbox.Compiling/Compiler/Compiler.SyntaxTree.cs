@@ -59,10 +59,9 @@ partial class Compiler
 		var root = tree.GetRoot();
 
 		var disabledTrivia = root.DescendantTrivia( descendIntoTrivia: true )
-								 .Where( t => t.IsKind( SyntaxKind.DisabledTextTrivia ) )
-								 .ToList();
+								 .Where( t => t.IsKind( SyntaxKind.DisabledTextTrivia ) );
 
-		if ( disabledTrivia.Count == 0 )
+		if ( !disabledTrivia.Any() )
 			return tree;
 
 		var newRoot = root.ReplaceTrivia(
@@ -86,6 +85,7 @@ partial class Compiler
 		return null;
 	}
 
+	private static readonly char[] PathSeparators = ['/', '\\'];
 	void CollectFromFilesystem( BaseFileSystem filesystem, CodeArchive targetArchive, CSharpParseOptions options )
 	{
 		var files = filesystem.FindFile( "/", "*.*", true );
@@ -105,7 +105,7 @@ partial class Compiler
 			// folder/is/here/file.cs => folder/is/here
 			{
 				var folderName = System.IO.Path.GetDirectoryName( localPath );
-				var pathFolders = folderName.Split( new[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries );
+				var pathFolders = folderName.Split( PathSeparators, StringSplitOptions.RemoveEmptyEntries );
 
 				// is this ignored
 				if ( pathFolders.Any( x => _config.IgnoreFolders.Contains( x, StringComparer.OrdinalIgnoreCase ) ) )
