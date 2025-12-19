@@ -10,7 +10,7 @@ internal class BlacklistCodeWalker( SemanticModel semanticModel ) : CSharpSyntax
 	public List<Diagnostic> Diagnostics { get; set; } = [];
 
 	record LineSymbol( int Line, ISymbol Symbol );
-	HashSet<LineSymbol> LineSymbols = [];
+	private readonly HashSet<LineSymbol> _lineSymbols = [];
 
 	private readonly SemanticModel _semanticModel = semanticModel;
 
@@ -51,7 +51,7 @@ internal class BlacklistCodeWalker( SemanticModel semanticModel ) : CSharpSyntax
 
 		// This isn't strictly needed, it just makes the diagnostics a bit neater and easier to test against
 		var lineSymbol = new LineSymbol( node.GetLocation().GetMappedLineSpan().StartLinePosition.Line, symbol );
-		if ( LineSymbols.Add( lineSymbol ) == false )
+		if ( _lineSymbols.Add( lineSymbol ) == false )
 		{
 			base.DefaultVisit( node );
 			return;

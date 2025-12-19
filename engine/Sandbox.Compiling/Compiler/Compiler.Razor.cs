@@ -72,7 +72,7 @@ partial class Compiler
 		} );
 
 		// Add any diagnostics to the output
-		if ( diagnostics.Any() )
+		if ( !diagnostics.IsEmpty )
 		{
 			output.Diagnostics.AddRange( diagnostics );
 		}
